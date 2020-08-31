@@ -1,6 +1,6 @@
 <template>
   <div class="__publishing">
-    <div class="icon el-icon-delete-solid" @click="deleteProject"></div>
+    <div class="icon el-icon-delete-solid" @click="clearLog"></div>
     <div class="button-box">
       <div
         @click="run('install')"
@@ -20,15 +20,27 @@
         style="float:right;display:inline-block;"
         id="online"
       >发布</div>
+      <div @click="preload(true)" class="button" style="float:right;display:inline-block;">预览</div>
     </div>
 
     <div class="scrollViewContainer">
       <div ref="scrollIntoView" id="scrollIntoView">
-        <p v-for="(msg, index) in installMessage" :key="index" :class="msg.type">
+        <p
+          v-for="(msg, index) in installMessage"
+          :key="index"
+          :class="msg.type"
+          class="messageItem"
+        >
           <span>{{ index + 1 }}.&nbsp;</span>
           <span>{{ msg.info }}</span>
         </p>
       </div>
+    </div>
+
+    <div class="preload" v-if="showPreload">
+      <iframe :src="iframUrl" frameborder="0"></iframe>
+      <input type="text" v-model="preloadUrl" @keyup.enter="iframUrl = preloadUrl" />
+      <button @click="preload(false)">X</button>
     </div>
   </div>
 </template>
@@ -47,24 +59,24 @@ export default {
       options: {
         target: "#anzhuang",
         background: "rgba(0,0,0,0.2)",
-      },
+      }, // http://publish.pianoboy.club/
       api: {
         install: {
-          url: "ws://localhost:8081/publish/home/projects/install",
+          url: "ws://publish.pianoboy.club:8081/publish/home/projects/install",
           options: {
             target: "#install",
             background: "rgba(0,0,0,0.2)",
           },
         },
         build: {
-          url: "ws://localhost:8081/publish/home/projects/build",
+          url: "ws://publish.pianoboy.club:8081/publish/home/projects/build",
           options: {
             target: "#build",
             background: "rgba(0,0,0,0.2)",
           },
         },
         online: {
-          url: "ws://localhost:8081/publish/home/projects/online",
+          url: "ws://publish.pianoboy.club:8081/publish/home/projects/online",
           options: {
             target: "#online",
             background: "rgba(0,0,0,0.2)",
@@ -72,6 +84,9 @@ export default {
         },
       },
       i: 0,
+      showPreload: false, //是否显示预览
+      preloadUrl: "", // 预览Url
+      iframUrl: "",
     };
   },
   props: ["project"],
@@ -210,6 +225,20 @@ export default {
       });
       this.i = this.i + arr.length;
     },
+
+    preload(bool) {
+      this.showPreload = bool;
+      if (!bool) {
+        this.iframUrl = "";
+        this.preloadUrl = "";
+      }
+    },
+
+    clearLog() {
+      for (let i = this.installMessage.length; i >= 0; i--) {
+        this.installMessage.splice(i, 1);
+      }
+    },
   },
   mounted() {
     const scrollIntoView = this.$refs.scrollIntoView;
@@ -224,47 +253,61 @@ export default {
   font-size: 20px;
   .icon:hover {
     color: #3f9eff;
+    cursor: pointer;
   }
   .scrollViewContainer {
     background: #cccccc;
-    padding: 50px;
+    border-width: 50px 50px 65px 50px;
+    border-style: solid;
+    border-color: #cccccc;
     height: 500px;
     overflow: scroll;
-    .warn {
-      color: chocolate;
-      animation: warn 0.05s;
-    }
-    .log {
-      color: darkgreen;
-      animation: log 0.05s;
-    }
+    border-radius: 4px;
     #scrollIntoView {
-      padding: 50px;
-    }
-    @keyframes warn {
-      0% {
-        transform: scale(1);
+      border-radius: 4px;
+      .warn {
         color: chocolate;
+        animation: warn 0.05s;
       }
-      50% {
-        transform: scale(1.01);
-        color: darkred;
+      .log {
+        color: darkgreen;
+        animation: log 0.05s;
       }
-      100% {
-        transform: scale(1);
-        color: chocolate;
+      @keyframes warn {
+        0% {
+          transform: scale(1);
+          color: chocolate;
+        }
+        50% {
+          transform: scale(1.01);
+          color: darkred;
+        }
+        100% {
+          transform: scale(1);
+          color: chocolate;
+        }
       }
-    }
-    @keyframes log {
-      0% {
-        transform: scale(1);
-        opacity: 0;
-        margin-left: 100px;
+      @keyframes log {
+        0% {
+          transform: scale(1);
+          opacity: 0;
+          margin-left: 100px;
+        }
+        100% {
+          transform: scale(1);
+          opacity: 1;
+          margin-left: 0px;
+        }
       }
-      100% {
-        transform: scale(1);
-        opacity: 1;
-        margin-left: 0px;
+      .el-icon-document {
+        display: none;
+      }
+      .messageItem:hover .el-icon-document {
+        display: block;
+        color: #ffffff;
+        float: right;
+        font-weight: bolder;
+        cursor: pointer;
       }
     }
   }
@@ -287,6 +330,51 @@ export default {
       background: #3f9eff;
       color: #ffffff;
       border-color: #3f9eff;
+    }
+  }
+  .preload {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 15;
+    border: none;
+    top: 0;
+    left: 0;
+    input {
+      outline: none;
+      width: 250px;
+      height: 30px;
+      border: 1px solid #000;
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      margin-left: -125px;
+      background: rgba(255, 255, 255, 0.5);
+    }
+    iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    button {
+      position: absolute;
+      right: 50px;
+      top: 20px;
+      border: 1px solid #ffffff;
+      width: 25px;
+      height: 25px;
+      border-radius: 50px;
+      line-height: 24px;
+      text-align: center;
+      background: brown;
+      color: #ffffff;
+      user-select: none;
+      cursor: pointer;
+    }
+    button:hover {
+      transform: scale(1.2);
     }
   }
 }

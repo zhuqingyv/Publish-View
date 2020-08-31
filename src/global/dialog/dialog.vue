@@ -1,24 +1,21 @@
 <!--
  * @Author: zhuqingyu
  * @Date: 2020-08-26 22:38:19
- * @LastEditTime: 2020-08-26 23:29:00
+ * @LastEditTime: 2020-09-01 02:24:47
  * @LastEditors: zhuqingyu
 -->
 <template>
   <el-dialog :title="option.title" :visible.sync="option.show">
+    <div class="dialog-header" aria-label="克隆"></div>
     <div class="dialog-body">
       <div class="addInfo">
         <div class="item">
-          <span>名称：</span
-          ><input type="text" v-model="option.name" placeholder="请输入名称" />
+          <span>名称：</span>
+          <input type="text" v-model="option.name" placeholder="请输入名称" />
         </div>
         <div class="item">
           <span>地址：</span>
-          <input
-            type="text"
-            v-model="option.url"
-            placeholder="请输入 github 地址"
-          />
+          <input type="text" v-model="option.url" placeholder="请输入 github 地址" />
         </div>
       </div>
     </div>

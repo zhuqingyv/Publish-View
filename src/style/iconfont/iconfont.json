@@ -6,6 +6,13 @@
   "description": "一个个人自动话化部署系统",
   "glyphs": [
     {
+      "icon_id": "9241153",
+      "name": "项目",
+      "font_class": "iconzhengli_xiangmu",
+      "unicode": "e64c",
+      "unicode_decimal": 58956
+    },
+    {
       "icon_id": "577309",
       "name": "关闭1",
       "font_class": "guanbi1",

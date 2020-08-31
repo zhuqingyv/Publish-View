@@ -1,7 +1,7 @@
 <!--
  * @Author: zhuqingyu
  * @Date: 2020-08-26 14:48:52
- * @LastEditTime: 2020-08-28 14:47:29
+ * @LastEditTime: 2020-09-01 02:18:38
  * @LastEditors: zhuqingyu
 -->
 <template>
@@ -9,7 +9,7 @@
     <el-menu class="__piblish_menu">
       <el-submenu index="1">
         <template slot="title">
-          <i class="el-icon-files"></i>Projects
+          <i class="iconfont iconiconzhengli_xiangmu" style="font-size:20px;margin-right:6px;"></i>Projects
         </template>
         <el-menu-item-group class="listBox">
           <template slot="title">选择一个待发布的 gitHub 项目</template>
@@ -19,7 +19,7 @@
             :key="index"
             @checkProject="checkProject"
           />
-          <div class="el-icon-plus add-project" @click="showDialog"></div>
+          <div class="iconfont iconjiahao1 add-project" @click="showDialog"></div>
         </el-menu-item-group>
       </el-submenu>
     </el-menu>
@@ -76,12 +76,13 @@ export default {
       background-color: #cdd5df;
       color: #fff;
       font-size: 25px;
-      text-indent: 6px;
+      // text-indent: 6px;
       font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
       font-weight: bolder;
       user-select: none;
       cursor: pointer;
       transition: opacity 0.5s;
+      text-align: center;
     }
     .add-project:hover {
       opacity: 0.5;

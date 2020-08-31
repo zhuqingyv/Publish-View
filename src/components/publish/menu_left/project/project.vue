@@ -1,11 +1,11 @@
 <!--
  * @Author: zhuqingyu
  * @Date: 2020-08-26 15:26:30
- * @LastEditTime: 2020-08-27 19:04:29
+ * @LastEditTime: 2020-08-31 17:29:13
  * @LastEditors: zhuqingyu
 -->
 <template>
-  <div class="project" @click="checkProject">
+  <div class="project" @click="checkProject" v-if="projectData">
     <span>{{ projectData.name }}</span>
   </div>
 </template>
@@ -17,7 +17,9 @@ export default {
   },
   props: {
     projectData: {
-      default: () => ({}),
+      default: () => {
+        return {};
+      },
     },
   },
   methods: {

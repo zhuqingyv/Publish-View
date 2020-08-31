@@ -1,25 +1,28 @@
 <template>
   <div class="__publishing">
     <div class="icon el-icon-delete-solid" @click="deleteProject"></div>
-    <div
-      @click="run('install')"
-      class="button"
-      style="float:right;display:inline-block;"
-      id="install"
-    >安装</div>
-    <div
-      @click="run('build')"
-      class="button"
-      style="float:right;display:inline-block;"
-      id="build"
-    >打包</div>
-    <div
-      @click="run('online')"
-      class="button"
-      style="float:right;display:inline-block;"
-      id="online"
-    >发布</div>
-    <div style="height: 300px;overflow:scroll;" class="scrollViewContainer">
+    <div class="button-box">
+      <div
+        @click="run('install')"
+        class="button"
+        style="float:right;display:inline-block;"
+        id="install"
+      >安装</div>
+      <div
+        @click="run('build')"
+        class="button"
+        style="float:right;display:inline-block;"
+        id="build"
+      >打包</div>
+      <div
+        @click="run('online')"
+        class="button"
+        style="float:right;display:inline-block;"
+        id="online"
+      >发布</div>
+    </div>
+
+    <div class="scrollViewContainer">
       <div ref="scrollIntoView" id="scrollIntoView">
         <p v-for="(msg, index) in installMessage" :key="index" :class="msg.type">
           <span>{{ index + 1 }}.&nbsp;</span>
@@ -203,7 +206,7 @@ export default {
       arr.forEach((msg, i) => {
         setTimeout(() => {
           $this.installMessage.push(msg);
-        }, ($this.i + i + 1) * 500);
+        }, ($this.i + i + 1) * 30);
       });
       this.i = this.i + arr.length;
     },
@@ -225,13 +228,15 @@ export default {
   .scrollViewContainer {
     background: #cccccc;
     padding: 50px;
+    height: 500px;
+    overflow: scroll;
     .warn {
       color: chocolate;
-      animation: warn 0.2s;
+      animation: warn 0.05s;
     }
     .log {
       color: darkgreen;
-      animation: log 0.2s;
+      animation: log 0.05s;
     }
     #scrollIntoView {
       padding: 50px;
@@ -263,21 +268,26 @@ export default {
       }
     }
   }
-
-  .button {
-    border-radius: 4px;
-    padding: 5px 12px;
-    border: 1px solid #cccccc;
-    overflow: hidden;
-    cursor: pointer;
-  }
-  .button:nth-child(2) {
-    margin-left: 30px;
-  }
-  .button:hover {
-    background: #3f9eff;
-    color: #ffffff;
-    border-color: #3f9eff;
+  .button-box {
+    display: inline-flex;
+    justify-content: space-around;
+    width: 300px;
+    position: absolute;
+    bottom: 20px;
+    z-index: 999;
+    .button {
+      border-radius: 4px;
+      padding: 5px 12px;
+      border: 1px solid #cccccc;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+    }
+    .button:hover {
+      background: #3f9eff;
+      color: #ffffff;
+      border-color: #3f9eff;
+    }
   }
 }
 </style>

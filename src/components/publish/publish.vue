@@ -1,7 +1,7 @@
 <!--
  * @Author: zhuqingyu
  * @Date: 2020-08-26 14:34:15
- * @LastEditTime: 2020-08-29 18:16:14
+ * @LastEditTime: 2020-09-01 13:51:36
  * @LastEditors: zhuqingyu
 -->
 <template>
@@ -14,11 +14,7 @@
   >
     <el-header class="header">Publish</el-header>
     <el-container>
-      <menuLeft
-        :projects="projects"
-        @checkProject="checkProject"
-        @addProject="addProject"
-      />
+      <menuLeft :projects="projects" @checkProject="checkProject" @addProject="addProject" />
       <publishContent :project="project" @deleteProject="deleteProject" />
     </el-container>
   </el-container>
@@ -69,6 +65,7 @@ export default {
     },
     deleteProject(project) {
       const $this = this;
+      const token = Cookies.get("PublishLoginToken");
       $this.loading = true;
       $this.loadingTitle = "远程删除 git 仓库中！";
       Api({
@@ -76,6 +73,7 @@ export default {
         url: "/publish/home/projects/delete",
         data: {
           id: project.id,
+          token,
         },
       })
         .then((response) => {

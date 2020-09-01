@@ -1,7 +1,7 @@
 <!--
  * @Author: zhuqingyu
  * @Date: 2020-08-25 13:33:13
- * @LastEditTime: 2020-08-29 00:28:14
+ * @LastEditTime: 2020-09-01 14:54:48
  * @LastEditors: zhuqingyu
 -->
 <template>
@@ -22,7 +22,8 @@
         @mousedown="mousedown($event, form.passWord)"
         @change="change('password', $event.target.value)"
       />
-      <div class="__login_button" @click="login()">登陆</div>
+      <div class="__login_button button" @click="login()">登陆</div>
+      <dir class="__login_tourist button" @click="touristLogin()">游客登陆</dir>
     </div>
   </div>
 </template>
@@ -71,6 +72,7 @@ export default {
           bool: false,
           title: `请填写账号名或密码！`,
         });
+        $this.loading = false;
       } else {
         Api({
           method: "post",
@@ -104,6 +106,43 @@ export default {
             console.clear();
           });
       }
+    },
+    touristLogin() {
+      const $this = this;
+      let body = {
+        name: "tourist",
+        passWord: "123456",
+        uuid: Date.now(),
+      };
+      Api({
+        method: "post",
+        url: "/publish/login",
+        data: body,
+      })
+        .then((response) => {
+          const title = response.data.login ? "登陆成功" : "登陆失败";
+          const token = response.data.token;
+          Cookies.set("PublishLoginToken", "");
+          Event.$emit("showTip", {
+            show: true,
+            bool: response.data.login,
+            title: title,
+          });
+          $this.$emit("login", response.data.login);
+          $this.loading = false;
+        })
+        .catch((err) => {
+          Event.$emit("showTip", {
+            show: true,
+            bool: false,
+            title: err.response ? err.response.data : "登陆失败！",
+          });
+          $this.loading = false;
+          $this.show = true;
+          $this.form.name = "";
+          $this.form.passWord = "";
+          console.clear();
+        });
     },
   },
   mounted() {
@@ -167,8 +206,7 @@ export default {
       text-indent: 6px;
       font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
     }
-    .__login_button {
-      width: 40px;
+    .button {
       height: 30px;
       border: 1px solid #cccccc;
       border-radius: 4px;
@@ -178,11 +216,19 @@ export default {
       margin-top: 12px;
       user-select: none;
       cursor: pointer;
+      padding: 4px 12px;
     }
-    .__login_button:hover {
+    .button:hover {
       background: #1a74db;
       color: #fff;
       border: 1px solid #1a74db;
+    }
+    .__login_tourist {
+      opacity: 0.05;
+      transition: all 0.5s;
+    }
+    .__login_tourist:hover {
+      opacity: 1;
     }
     @keyframes show {
       0% {

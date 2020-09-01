@@ -2,3 +2,4 @@
 /store/*
 !/store/readMe.js
 /node_modules/*
+/dist/*

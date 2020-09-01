@@ -1,6 +1,7 @@
 <template>
   <div class="__publishing">
-    <div class="icon el-icon-delete-solid" @click="clearLog"></div>
+    <div class="icon iconfont iconashbin-fill" @click="clearLog"></div>
+
     <div class="button-box">
       <div
         @click="run('install')"
@@ -21,6 +22,11 @@
         id="online"
       >发布</div>
       <div @click="preload(true)" class="button" style="float:right;display:inline-block;">预览</div>
+      <div
+        @click="deleteProject()"
+        class="button delete"
+        style="float:right;display:inline-block;"
+      >删除</div>
     </div>
 
     <div class="scrollViewContainer">
@@ -251,6 +257,12 @@ export default {
 <style scoped lang="scss">
 .__publishing {
   font-size: 20px;
+  .icon {
+    font-size: 30px;
+    position: absolute;
+    left: 5px;
+    top: 5px;
+  }
   .icon:hover {
     color: #3f9eff;
     cursor: pointer;
@@ -314,9 +326,10 @@ export default {
   .button-box {
     display: inline-flex;
     justify-content: space-around;
-    width: 300px;
+    width: 350px;
     position: absolute;
-    bottom: 20px;
+    bottom: 5px;
+    left: 5px;
     z-index: 999;
     .button {
       border-radius: 4px;
@@ -330,6 +343,11 @@ export default {
       background: #3f9eff;
       color: #ffffff;
       border-color: #3f9eff;
+    }
+    .delete:hover {
+      background: brown !important;
+      color: #ffffff !important;
+      border-color: brown !important;
     }
   }
   .preload {

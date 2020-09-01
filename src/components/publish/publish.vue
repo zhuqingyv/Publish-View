@@ -14,7 +14,11 @@
   >
     <el-header class="header">Publish</el-header>
     <el-container>
-      <menuLeft :projects="projects" @checkProject="checkProject" @addProject="addProject" />
+      <menuLeft
+        :projects="projects"
+        @checkProject="checkProject"
+        @addProject="addProject"
+      />
       <publishContent :project="project" @deleteProject="deleteProject" />
     </el-container>
   </el-container>

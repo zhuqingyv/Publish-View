@@ -1,7 +1,7 @@
 <!--
  * @Author: zhuqingyu
  * @Date: 2020-08-26 14:34:15
- * @LastEditTime: 2020-09-01 13:51:36
+ * @LastEditTime: 2020-09-01 23:44:16
  * @LastEditors: zhuqingyu
 -->
 <template>
@@ -76,7 +76,7 @@ export default {
         method: "post",
         url: "/publish/home/projects/delete",
         data: {
-          id: project.id,
+          projectID: project.id,
           token,
         },
       })

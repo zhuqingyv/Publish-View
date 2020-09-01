@@ -7,6 +7,7 @@
     "serve:pro": "vue-cli-service serve --mode production",
     "inspect": "vue-cli-service inspect",
     "build": "vue-cli-service build",
+    "build:dev": "vue-cli-service build --mode development",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {

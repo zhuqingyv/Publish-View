@@ -68,21 +68,21 @@ export default {
       }, // http://publish.pianoboy.club/
       api: {
         install: {
-          url: "ws://publish.pianoboy.club:8081/publish/home/projects/install",
+          url: `${process.env.VUE_APP_SOCKET}/publish/home/projects/install`,
           options: {
             target: "#install",
             background: "rgba(0,0,0,0.2)",
           },
         },
         build: {
-          url: "ws://publish.pianoboy.club:8081/publish/home/projects/build",
+          url: `${process.env.VUE_APP_SOCKET}/publish/home/projects/build`,
           options: {
             target: "#build",
             background: "rgba(0,0,0,0.2)",
           },
         },
         online: {
-          url: "ws://publish.pianoboy.club:8081/publish/home/projects/online",
+          url: `${process.env.VUE_APP_SOCKET}/publish/home/projects/online`,
           options: {
             target: "#online",
             background: "rgba(0,0,0,0.2)",

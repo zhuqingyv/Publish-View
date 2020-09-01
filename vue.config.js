@@ -1,18 +1,18 @@
 /*
  * @Author: zhuqingyu
  * @Date: 2020-07-23 14:49:02
- * @LastEditTime: 2020-09-01 15:39:01
+ * @LastEditTime: 2020-09-01 23:18:13
  * @LastEditors: zhuqingyu
  */
 
 const path = require("path");
 if (process.env.NODE_ENV === "development") {
-	process.env.VUE_APP_HTTP = "http://localhost:8081";
-	process.env.VUE_APP_SOCKET = "ws://localhost:8081";
+	process.env.VUE_APP_HTTP = "http://localhost";
+	process.env.VUE_APP_SOCKET = "ws://localhost";
 	console.log("当前dev环境");
 } else if (process.env.NODE_ENV === "production") {
-	process.env.VUE_APP_HTTP = "http://publish.pianoboy.club:8081";
-	process.env.VUE_APP_SOCKET = "ws://publish.pianoboy.club:8081";
+	process.env.VUE_APP_HTTP = "http://publish.pianoboy.club";
+	process.env.VUE_APP_SOCKET = "ws://publish.pianoboy.club";
 	console.log("当前pro环境");
 }
 
